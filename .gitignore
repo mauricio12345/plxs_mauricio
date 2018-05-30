@@ -1,0 +1,16 @@
+*.iml
+.idea/
+.gradle/
+target/
+run/
+logs/
+backups/
+.settings/
+.classpath
+.project
+board.dat
+default_board.dat
+heatmap.dat
+pxls.conf
+index_cache.html
+TODO

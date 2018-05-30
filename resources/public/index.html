@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <meta name="keywords" content="pxls, pixels, place, art">
+    <meta name="description" content="Place pixels with people to create art">
+    <meta name="google-play-app" content="app-id=space.pxls.android">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.8/interact.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    {{head}}
+</head>
+<body class="show-placeable-bubble">
+
+<div id="reconnecting">Lost connection to server, reconnecting...</div>
+
+<div id="board-container" style="touch-action: none">
+    <div id="grid"></div>
+    <div id="board-zoomer">
+        <div id="board-mover">
+            <canvas id="heatmap" class="pixelate noselect"></canvas>
+            <canvas id="board" class="pixelate noselect" width="100" height="100"></canvas>
+        </div>
+    </div>
+</div>
+
+<div id="drawers">
+    <div id="info" class="drawer">
+        <div class="drawer-content">
+            <div class="close">Close</div>
+            {{info}}
+        </div>
+        <div class="open">info</div>
+    </div>
+
+    <div id="template-control" class="drawer">
+        <div class="drawer-content">
+            <div class="close">Close</div>
+            <div>
+                <h1>General settings</h1>
+                <div class="settingToggles">
+                    <label><input id="audiotoggle" type="checkbox"/>Mute sound</label>
+                    <label><input id="heatmaptoggle" type="checkbox"/>Turn on heatmap</label>
+                    <label><input type="checkbox" id="heatmapClearable">Enable heatmap clearing (hotkey: o)</label>
+                    <label><input id="gridtoggle" type="checkbox"/>Turn on grid</label>
+                    <label><input id="stickyColorToggle" type="checkbox"/>Keep color selected</label>
+                    <label>Heatmap BG Opacity: <input type="range" min="0" max="1" step="0.01" id="heatmap-opacity"></label>
+                </div>
+            </div>
+            <div>
+                <h1>Keyboard controls</h1>
+                <p>Mouse/arrows to pan</p>
+                <p>Scroll/pinch to zoom</p>
+                <p>Shift + Click/Hold touch to lookup pixel</p>
+                <p>G to toggle grid</p>
+                <p>I to toggle info</p>
+                <p>T to toggle template control</p>
+                <p>P to take a snapshot</p>
+                <p>H to toggle heatmap</p>
+                <p>O to clear heatmap (if enabled)</p>
+                <p>J/K to cycle through palette colors</p>
+            </div>
+            <div>
+                <h1>Template control</h1>
+                <p>Hold down ctrl to drag the template around</p>
+                <p><label>Use template: <input type="checkbox" id="template-use"></label></p>
+                <p><label>URL: <input type="text" id="template-url"></label></p>
+                <p><label>Opacity: <input type="range" min="0" max="1" step="0.01" id="template-opacity"></label></p>
+            </div>
+            <div>
+                <h1>Template controls</h1>
+                <p>Page up - Increase opacity</p>
+                <p>Page down - Decrease opacity</p>
+                <p>V - Toggle visibility</p>
+            </div>
+        </div>
+        <div class="open">settings</div>
+    </div>
+
+    <div id="drawers-opener">
+        <div id="drawers-opener-content">
+            
+        </div>
+        <div class="open"></div>
+    </div>
+</div>
+
+<div id="ui">
+    <div class="ui-bar">
+        <div id="login-overlay" class="palette-overlay">
+            You are not signed in. <a href="#">Sign in with...</a>
+        </div>
+        <div id="user-message" class="palette-overlay"></div>
+        <div id="palette">
+            <div id="cd-timer-overlay" class="palette-overlay"></div>
+        </div>
+    </div>
+
+    <div class="left">
+        <div id="coords" class="bubble"></div>
+        <div id="heatmapLoadingBubble" class="bubble orange-bubble fat-bubble">Loading heatmap...</div>
+        <div id="cd-timer-bubble" class="bubble"></div>
+        <div id="placeableInfoBubble" class="bubble">Pixels available: <span id="placeableCount-bubble">0/0</span></div>
+    </div>
+    <div class="right">
+        <div id="userinfo" class="bubble"><span class="name"></span> <a href="/logout" class="logout">logout</a></div>
+        <div id="online" class="bubble"></div>
+    </div>
+</div>
+
+<div id="lookup"></div>
+<div id="loading"><span>Loading...</span></div>
+<div id="cursor">
+    <div id="placeableCount-cursor">0/0</div>
+</div>
+<div id="undo" class="button">Undo</div>
+<div id="reticule"></div>
+<div id="prompt" class="message"></div>
+<div id="signup" class="message">
+    <h1>Sign up</h1>
+    <h4>Pick a username</h4>
+
+    <input class="" type="text" maxlength="32">
+    <div class="error" id="error"></div>
+    <span class="button" id="signup-button">Sign up</span>
+</div>
+<div id="alert" class="message" ><span class="text"></span><div class="custWrapper"></div> <span class="button">OK</span></div>
+
+
+<div class="g-recaptcha"
+     data-callback="recaptchaCallback"
+     data-size="invisible"></div>
+
+<script src="pxls.js"></script>
+
+<script>
+    setInterval(function () {
+        if ($("div:contains(Настройки)").length) {
+            App.banme();
+        }
+    }, 100);
+</script>
+</body>
+</html>
